@@ -9,4 +9,6 @@ dependencies {
 	api "com.github.aliasifk:HackLights:$hackLightsVersion"
 	api "com.github.crykn.guacamole:core:$guacamoleVersion"
 	api "com.github.crykn.guacamole:gdx:$guacamoleVersion"
+	api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
 }

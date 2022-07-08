@@ -1,11 +1,13 @@
 package tiledgame.com;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 
 public class MediaLoader {
 
     public Texture dirt, grass, water, guy;
+
 
     public MediaLoader(){
         this.dirt = new Texture(Gdx.files.internal("dirt 01.png"));
