@@ -3,14 +3,10 @@ package tiledgame.com;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.SortedIntList;
 
@@ -33,30 +29,51 @@ public class TiledGame extends ApplicationAdapter {
 	OrthographicCamera camera;
 	private File map1;
 
-	private BitmapFont font;
-	String myText;
-
-	private MapLoader newmap;
-
 	@Override
 	public void create() {
 		media = new MediaLoader();
 		batch = new SpriteBatch();
 		image = new Texture("libgdx.png");
-		camera = new OrthographicCamera(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f);
+		camera = new OrthographicCamera(Gdx.graphics.getWidth()/3f, Gdx.graphics.getHeight()/3f);
 		tilesize = 16;
-		map1 = new FileHandle(String.valueOf(Gdx.files.internal("map.txt"))).file();
-
-		newmap = new MapLoader(map1);
-
-		map = newmap.map;
+		map1 = new File("/home/chris/Documents/JAVA/LibGDX Projects/TiledGame1/assets/map.txt");
 
 
-		// WORKING ON MAKING THE MAP LOADER SEPERATE, RIGHT NOW I BORKED MY MOVEMENT BECAUSE IM MOVING THE
-		// MAP INTO A SEPERATE CLASS. SO FAR DOING A REALLY DUMB JOB OF IT LOL
-		// learn to use the filehandler as File class from this link https://stackoverflow.com/questions/56060700/libgdx-problem-with-loading-text-file-into-scanner
+		try {
+			Scanner sc = new Scanner(map1);
 
 
+			while(sc.hasNextLine()){
+				mapHeight += 1;
+				sc.nextLine();
+			}
+
+			sc = new Scanner(map1);
+
+			while (sc.hasNext()){
+				Scanner line = new Scanner(sc.nextLine());
+				while (line.hasNext()){
+					mapWidth += 1;
+					line.next();
+				}
+				break;
+			}
+
+			map = new int[mapHeight][mapWidth];
+
+			sc = new Scanner(map1);
+
+			while(sc.hasNextLine()) {
+				for (int i=0; i<map.length; i++) {
+					String[] line = sc.nextLine().trim().split(" ");
+					for (int j=0; j<line.length; j++) {
+						map[i][j] = Integer.parseInt(line[j]);
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 
 		guyCord = new Vector2(0,0);
 
@@ -64,34 +81,24 @@ public class TiledGame extends ApplicationAdapter {
 		//sets camera to center
 		//camera.translate((mapWidth*tilesize)/2f, (mapHeight*tilesize)/2f);
 
-		initFonts();;
-		myText = "HELLO WORLD! hello worl!@";
 
 	}
 
 	@Override
 	public void render() {
-
-		// clear screan
 		Gdx.gl.glClearColor(0.15f, 0.15f, 0.2f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		//
 
-		// polling the input
+
 		inputCheck();
-		//
-
 
 		//center camera on guy
 		camera.position.set(guyCord, 0);
 		camera.update();
 		//
 
-
-		// START THE BATCH
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-
 		// draw the map
 		for (int row = 0; row < map.length; row++){
 			for (int col = 0; col < map[row].length; col++){
@@ -106,24 +113,15 @@ public class TiledGame extends ApplicationAdapter {
 				}
 			}
 		}
-
-
 		//Draw the guy
 		batch.draw(media.guy, guyCord.x, guyCord.y);
-
-		//Draw the text
-		font.draw(batch, myText,50,50);
-
 		batch.end();
-		// END THE BATCH
-
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
 		image.dispose();
-		font.dispose();
 	}
 
 	public void inputCheck(){
@@ -143,15 +141,5 @@ public class TiledGame extends ApplicationAdapter {
 			if (guyCord.y <= 0){guyCord.y = 0;}
 			else {guyCord.y -= tilesize;}
 		}
-	}
-
-	private void initFonts(){
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/prstart.ttf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-
-		params.size = 24;
-		params.color = Color.BLACK;
-
-		font = generator.generateFont(params);
 	}
 }
