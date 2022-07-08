@@ -3,6 +3,7 @@ package tiledgame.com;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,7 +37,7 @@ public class TiledGame extends ApplicationAdapter {
 		image = new Texture("libgdx.png");
 		camera = new OrthographicCamera(Gdx.graphics.getWidth()/3f, Gdx.graphics.getHeight()/3f);
 		tilesize = 16;
-		map1 = new File("/home/chris/Documents/JAVA/LibGDX Projects/TiledGame1/assets/map.txt");
+		map1 = new FileHandle(String.valueOf(Gdx.files.internal("map.txt"))).file();
 
 
 		try {
