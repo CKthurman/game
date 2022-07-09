@@ -44,6 +44,7 @@ public class TiledGame extends ApplicationAdapter {
 		camera = new OrthographicCamera(Gdx.graphics.getWidth()/3f, Gdx.graphics.getHeight()/3f);
 		tilesize = 16;
 		map1 = new FileHandle(String.valueOf(Gdx.files.internal("map.txt"))).file();
+		initFonts();
 
 
 
@@ -126,6 +127,7 @@ public class TiledGame extends ApplicationAdapter {
 		}
 		//Draw the guy
 		batch.draw(media.guy, guyCord.x, guyCord.y);
+		font.draw(batch, "Hellp", 50, 50);
 		batch.end();
 	}
 
@@ -160,5 +162,7 @@ public class TiledGame extends ApplicationAdapter {
 
 		params.size = 24;
 		params.color = Color.BLACK;
+		font = generator.generateFont(params);
+
 	}
 }
