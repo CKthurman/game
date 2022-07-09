@@ -34,6 +34,7 @@ public class TiledGame extends ApplicationAdapter {
 	private BitmapFont font;
 	private FreeTypeFontGenerator generator;
 
+
 	@Override
 	public void create() {
 		media = new MediaLoader();
