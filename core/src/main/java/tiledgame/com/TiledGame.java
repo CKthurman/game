@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.SortedIntList;
 
@@ -31,6 +32,7 @@ public class TiledGame extends ApplicationAdapter {
 	OrthographicCamera camera;
 	private File map1;
 	private BitmapFont font;
+	private FreeTypeFontGenerator generator;
 
 	@Override
 	public void create() {
@@ -40,6 +42,7 @@ public class TiledGame extends ApplicationAdapter {
 		camera = new OrthographicCamera(Gdx.graphics.getWidth()/3f, Gdx.graphics.getHeight()/3f);
 		tilesize = 16;
 		map1 = new FileHandle(String.valueOf(Gdx.files.internal("map.txt"))).file();
+
 
 
 
