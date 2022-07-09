@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,7 +33,7 @@ public class TiledGame extends ApplicationAdapter {
 	OrthographicCamera camera;
 	private File map1;
 	private BitmapFont font;
-	private FreeTypeFontGenerator generator;
+
 
 
 	@Override
@@ -132,6 +133,7 @@ public class TiledGame extends ApplicationAdapter {
 	public void dispose() {
 		batch.dispose();
 		image.dispose();
+		font.dispose();
 	}
 
 	public void inputCheck(){
@@ -151,5 +153,12 @@ public class TiledGame extends ApplicationAdapter {
 			if (guyCord.y <= 0){guyCord.y = 0;}
 			else {guyCord.y -= tilesize;}
 		}
+	}
+	private void initFonts(){
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/prstart.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+		params.size = 24;
+		params.color = Color.BLACK;
 	}
 }
