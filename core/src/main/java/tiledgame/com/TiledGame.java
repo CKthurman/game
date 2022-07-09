@@ -7,6 +7,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.SortedIntList;
@@ -29,6 +30,7 @@ public class TiledGame extends ApplicationAdapter {
 	private Vector2 guyCord;
 	OrthographicCamera camera;
 	private File map1;
+	private BitmapFont font;
 
 	@Override
 	public void create() {
@@ -40,6 +42,9 @@ public class TiledGame extends ApplicationAdapter {
 		map1 = new FileHandle(String.valueOf(Gdx.files.internal("map.txt"))).file();
 
 
+
+
+		// READS AND AMAKES THE MAP
 		try {
 			Scanner sc = new Scanner(map1);
 
