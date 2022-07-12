@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -21,6 +23,9 @@ public class Box2dgame extends ApplicationAdapter {
 	private Body player, platform;
 	float width, height, delta;
 
+	private SpriteBatch batch;
+	private Texture tex;
+
 	@Override
 	public void create() {
 		width = Gdx.graphics.getWidth();
@@ -28,7 +33,7 @@ public class Box2dgame extends ApplicationAdapter {
 		delta = Gdx.graphics.getDeltaTime();
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, width/2, height/2);
+		camera.setToOrtho(false, width/SCALE, height/SCALE);
 
 		world = new World(new Vector2(0, -9.8f), false);
 		debug = new Box2DDebugRenderer();
@@ -36,6 +41,8 @@ public class Box2dgame extends ApplicationAdapter {
 		player = createBox(3, 10,32, 32, false);
 		platform = createBox(0,0,64, 32, true);
 
+		batch = new SpriteBatch();
+		tex = new Texture("/Images/guy.png");
 
 	}
 
@@ -50,6 +57,11 @@ public class Box2dgame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		debug.render(world, camera.combined.scl(PPM));
+
+		batch.begin();
+
+		batch.end();
+
 
 	}
 
@@ -74,6 +86,7 @@ public class Box2dgame extends ApplicationAdapter {
 		world.step(delta, 6, 2);
 		cameraUpdate(delta);
 		inputUpdate(delta);
+		batch.setProjectionMatrix(camera.combined);
 	}
 
 	public void inputUpdate(float delta){
