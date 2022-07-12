@@ -14,8 +14,8 @@ import static font.com.utils.Constants.PPM;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Box2dgame extends ApplicationAdapter {
 	private boolean DEBUG = false;
+	private final float SCALE = 2.0f;
 	private OrthographicCamera camera;
-
 	private Box2DDebugRenderer debug;
 	private World world;
 	private Body player, platform;
